@@ -68,7 +68,7 @@ int main() {
     sort(top10List.begin(), top10List.end(), compareRanks);
 
     // MAIN FUNCTION RUNNER
-    for(int i; i < 50; i++) {
+    for(int i; i < imdbTop250.size(); i++) {
         movieRanker(top10List, imdbTop250[i]);
     }
     
