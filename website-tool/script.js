@@ -291,17 +291,12 @@ function buttonUpdate(counter, newMovie, top10List) {
     document.getElementById("buttonB").innerHTML = newMovie[0];
 }
 
-function buttonAClick(counter1, newMovCounter1, newMovie, top10List, imdbTop250) {
+function buttonAClick(counter1, newMovCounter1, top10List, imdbTop250) {
     if(newMovCounter1 == 249){
         document.getElementById("buttonA").style.visibility = 'hidden';
         document.getElementById("buttonB").style.visibility = 'hidden';
         document.getElementById("Question").style.visibility = 'hidden';
     }
-
-    top10List.splice(10-counter1, 0, newMovie);
-    top10List.pop();
-    
-    docTableUpdate(top10List);
 
     counter1 = 0;
     newMovCounter1++;
@@ -311,25 +306,31 @@ function buttonAClick(counter1, newMovCounter1, newMovie, top10List, imdbTop250)
 
     buttonUpdate(counter, imdbTop250[newMovCounter], top10List);
     docTableUpdate(top10List);
-
-    console.log("BUTTON A PRESSED");
-    console.log("Counter " + counter);
-    console.log("newMovCounter " + newMovCounter);
 }
 
-function buttonBClick(counter1, newMovCounter1, newMovie, top10List, imdbTop250) {
-    if (counter1 == 9) {
-        buttonAClick(10, newMovCounter1, newMovie, top10List, imdbTop250);
+function buttonBClick(counter1, newMovCounter1, top10List, imdbTop250) {
+    if (counter == 9) {
+        top10List.splice(9-counter1,0,imdbTop250[newMovCounter1]);
+        top10List.splice(11-counter1, 1);
+
+        docTableUpdate(top10List);
+
+        newMovCounter1++;
+        newMovCounter = newMovCounter1;
+        counter = 0;
+
+        buttonUpdate(counter, imdbTop250[newMovCounter1], top10List);
         return;
     }
+    top10List.splice(9-counter1,0,imdbTop250[newMovCounter1]);
+    top10List.splice(11-counter1, 1);
+
+    docTableUpdate(top10List);
+    
     counter1++;
     counter = counter1;
-    buttonUpdate(counter, newMovie, top10List);
-    docTableUpdate(top10List);
 
-    console.log("BUTTON B PRESSED");
-    console.log("Counter" + counter);
-    console.log("newMovCounter" + newMovCounter);
+    buttonUpdate(counter, imdbTop250[newMovCounter1], top10List);
 }
 
 
@@ -345,7 +346,5 @@ for(let i = 0; i<10; i++) {
 docTableUpdate(top10List);
 buttonUpdate(counter, imdbTop250[0], top10List);
 
-document.getElementById("buttonA").addEventListener("click", function() {buttonAClick(counter, newMovCounter, imdbTop250[newMovCounter], top10List, imdbTop250)});
-document.getElementById("buttonB").addEventListener("click", function() {buttonBClick(counter, newMovCounter, imdbTop250[newMovCounter], top10List, imdbTop250)});
-
-console.log("SCRIPT RE-RUN");
+document.getElementById("buttonA").addEventListener("click", function() {buttonAClick(counter, newMovCounter, top10List, imdbTop250)});
+document.getElementById("buttonB").addEventListener("click", function() {buttonBClick(counter, newMovCounter, top10List, imdbTop250)});
